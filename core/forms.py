@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from django.urls import path
 from django.conf import settings
-from django.conf.urls.static import static
-from . import views
+from django import forms
 
-app_name = 'core'
+from .models import Chat
 
+class ChatForm(forms.ModelForm):
+    class Meta:
+        model = Chat 
+        fields = ['content']
 
-urlpatterns = [
-    path('', views.Home, name="home"),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, 
-                document_root=settings.STATIC_ROOT)
+    def clean_content(self):
+        content = self.cleaned_data.get("content")
+        #
+        # 
+        return content
